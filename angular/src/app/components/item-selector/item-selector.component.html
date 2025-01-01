@@ -1,4 +1,4 @@
-<div class="flex-gap">
+<div class="flex-gap limit-height">
 <!--  <button (click)="getItem()">Load Item</button>-->
   <app-item-parser [item]="clipboardContent"></app-item-parser>
   <div class="block table-container" *ngIf="link">
@@ -10,18 +10,41 @@
 
       <table>
         <thead *ngIf="link && items?.length">
-        <tr>
-          <th>Time</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
+        <ng-container *ngIf="type === 'other'">
+          <tr>
+            <th>Listed</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="type === 'currency'">
+          <tr>
+            <th>Price</th>
+            <th>Price/Bulk</th>
+            <th>Stock</th>
+            <th>Fulfill</th>
+            <th>Listed</th>
+          </tr>
+        </ng-container>
         </thead>
         <tbody>
-        <ng-container *ngIf="link && items?.length">
+        <ng-container *ngIf="link && items?.length && isItemResponse(items)">
           <tr *ngFor="let item of items">
             <td>{{ item.listing.indexed | timeFromNow }}</td>
             <td>{{ item.listing.price.amount }} {{ item.listing.price.currency }}</td>
             <td></td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="link && items?.length && !isItemResponse(items)">
+          <tr *ngFor="let item of items">
+            <ng-container *ngIf="getItemExchangeDetails(item) as data">
+
+              <th>{{ data.exchange.amount / data.item.amount | number : '1.0-4' }}</th>
+              <th>{{ data.exchange.amount }}/{{ data.item.amount }}</th>
+              <th>{{ data.item.stock }}</th>
+              <th>{{ data.item.stock / data.item.amount | number : '1.0-0' }}</th>
+              <th>{{ item.listing.indexed | timeFromNow }}</th>
+            </ng-container>
           </tr>
         </ng-container>
         <ng-container *ngIf="link && !items?.length">

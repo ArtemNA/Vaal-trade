@@ -275,6 +275,12 @@ namespace PoeOverlayApp
                             var payload = data.GetProperty("payload").ToString();
                             await HandleTradeSearch(payload);
                             break;
+                            
+
+                        case "sendBulkPayload":
+                            var bulkPayload = data.GetProperty("payload").ToString();
+                            await HandleTradeBulkSearch(bulkPayload);
+                            break;
 
                         case "openInBrowser":
                             var url = data.GetProperty("payload").ToString();
@@ -405,6 +411,70 @@ namespace PoeOverlayApp
                     action = "tradeSearchResponse",
                     payload = fetchResult,
                     link = $"https://www.pathofexile.com/trade2/search/poe2/Standard/{id}"
+                }));
+            }
+            catch (HttpRequestException httpEx)
+            {
+                ShowDebugMessage($"HTTP Error: {httpEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                ShowDebugMessage($"General Error: {ex.Message}");
+            }
+        }
+
+        private async Task HandleTradeBulkSearch(string payload)
+        {
+            try
+            {
+                var apiUrl = "https://www.pathofexile.com/api/trade2/exchange/poe2/Standard";
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+                _httpClient.DefaultRequestHeaders.Clear();
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0");
+                _httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
+                {
+                    NoCache = true,
+                    NoStore = true,
+                    MustRevalidate = true
+                };
+
+                _httpClient.DefaultRequestHeaders.Pragma.Add(new NameValueHeaderValue("no-cache"));
+
+                var response = await _httpClient.PostAsync(apiUrl, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    ShowDebugMessage($"Search API Error: {response.StatusCode}\nDetails: {errorContent}");
+                    return;
+                }
+
+                var searchResult = await response.Content.ReadAsStringAsync();
+                var searchData = JsonSerializer.Deserialize<JsonElement>(searchResult);
+
+                var id = searchData.GetProperty("id").GetString();
+
+                if (!searchResult.Any())
+                {
+                    webView.CoreWebView2.PostWebMessageAsJson(JsonSerializer.Serialize(new
+                    {
+                        action = "tradeSearchResponse",
+                        payload = new
+                        {
+                            result = new string[] { } // Empty array for "result"
+                        },
+                        link = $"https://www.pathofexile.com/trade2/exchange/poe2/Standard/{id}"
+                    }));
+                    return;
+                }
+
+                // Відправляємо результат назад у Angular
+                webView.CoreWebView2.PostWebMessageAsJson(JsonSerializer.Serialize(new
+                {
+                    action = "tradeBulkSearchResponse",
+                    payload = searchResult,
+                    link = $"https://www.pathofexile.com/trade2/exchange/poe2/Standard/{id}"
                 }));
             }
             catch (HttpRequestException httpEx)

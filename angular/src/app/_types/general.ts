@@ -1,9 +1,11 @@
 export interface ItemProperty {
-  id: string; // Унікальний ID з JSON
-  key: string; // Ключ (наприклад, "rarity", "level")
-  value: string | number | { min?: number; max?: number };
-  isImportant: boolean; // Чи вибрав користувач
+  id: string;
+  key: string;
+  value: string | number;
+  isImportant: boolean;
   originalLine: string;
+  min?: number;
+  max?: number;
 }
 
 export type ModType = 'explicit' | 'implicit' | 'enchant' | 'rune' | 'sanctum' | 'skill';
@@ -29,5 +31,31 @@ export interface ItemResponse {
 
 export interface ItemsResponse {
   result: ItemResponse[];
+  link?: string;
+}
+
+export interface ListingCurrencyOffer {
+  exchange: {
+    currency: string,
+    amount: number,
+  },
+  item: {
+    amount: number,
+    stock: number,
+    id: string,
+    currency: string,
+  }
+}
+
+export interface ListingCurrency {
+  indexed: string;
+  offers: [ListingCurrencyOffer]
+}
+
+export interface CurrencyResponse {
+  result: {
+    id: string;
+    listing: ListingCurrency;
+  }[];
   link?: string;
 }

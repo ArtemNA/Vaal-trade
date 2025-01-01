@@ -67,3 +67,11 @@ export function setDeepProp(obj: Record<string, any>, value: any, ...path: (stri
     }
   }
 }
+
+export function safeSum(a: number | undefined, b: number | undefined) {
+  return (a ?? 0) + (b ?? 0);
+}
+
+export function max(num1: number, num2: number): number {
+  return Math.max(num1, num2)
+}

@@ -2,11 +2,14 @@
   <div class="header">
     <div>
       <div *ngIf="parsedItem.rarity === 'Unique'" class="unique-text">{{ parsedItem.name }}</div>
-      <div *ngIf="parsedItem.rarity !== 'Unique'" class="click">{{ parsedItem.class | itemCategory: itemCategories }}</div>
+      <div *ngIf="parsedItem.rarity !== 'Unique'" class="click" (click)="allowSwitchType && switchType()">
+        <ng-container *ngIf="!allowSwitchType || (allowSwitchType && !mainForm.get('type')?.value['value'])">{{ parsedItem.class | itemCategory: itemCategories : parsedItem.type }}</ng-container>
+        <ng-container *ngIf="allowSwitchType && mainForm.get('type')?.value['value']">{{ parsedItem.type }}</ng-container>
+      </div>
     </div>
-    <div class="click">
-      <span *ngIf="parsedItem.corrupted" class="red-text">Corrupted</span>
-      <span *ngIf="!parsedItem.corrupted">Not corrupted</span>
+    <div *ngIf="!parsedItem.class?.includes('currency')" class="click" (click)="changeCorruption()">
+      <span *ngIf="mainForm.get('corrupted')?.value" class="red-text">Corrupted</span>
+      <span *ngIf="!mainForm.get('corrupted')?.value">Not corrupted</span>
     </div>
   </div>
   <div class="checkbox-list">
@@ -115,6 +118,16 @@
               <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="propsGroups.at(i).get('value')?.setValue(true)">
             </div>
       </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div>Currency: </div>
+    <div class="currency-selector">
+      <input checked="checked" id="exalted" type="radio" name="currency" value="exalted" [formControl]="currencyControl" />
+      <label class="custom-currency-selector exalted" [class.active]="currencyControl.value === 'exalted'" for="exalted" (click)="forceChangedCurrency = true"></label>
+      <input id="divine" type="radio" name="currency" value="divine" [formControl]="currencyControl" />
+      <label class="custom-currency-selector divine" [class.active]="currencyControl.value === 'divine'" for="divine" (click)="forceChangedCurrency = true"></label>
     </div>
   </div>
 

@@ -9,6 +9,7 @@ import {ItemsResponse} from '../_types/general';
 export class ApiService {
   public itemFromClipboard$ = new Subject<any>();
   public itemsFromSearch$ = new Subject<ItemsResponse>();
+  public currencyFromSearch$ = new Subject<ItemsResponse>();
 
   constructor() {
     if (window.chrome?.webview) {
@@ -22,6 +23,13 @@ export class ApiService {
           const data = typeof event.data.payload === 'string' ? JSON.parse(event.data.payload) : event.data.payload;
           this.itemsFromSearch$.next({...data, link: event.data.link});
         }
+        if (event.data?.action === 'tradeBulkSearchResponse') {
+          let data = typeof event.data.payload === 'string' ? JSON.parse(event.data.payload) : event.data.payload;
+          if (!Array.isArray(data.result)) {
+            data.result = Object.values(data.result)
+          }
+          this.currencyFromSearch$.next({...data, link: event.data.link});
+        }
       });
     }
   }
@@ -30,6 +38,16 @@ export class ApiService {
     return new Promise((resolve, reject) => {
       if (window.chrome?.webview?.postMessage) {
         this.sendMessage({ action: 'sendPayload', payload: query });
+      } else {
+        reject('WebView2 communication not available');
+      }
+    });
+  }
+
+  searchBulk(query: any): Promise<ItemsResponse> {
+    return new Promise((resolve, reject) => {
+      if (window.chrome?.webview?.postMessage) {
+        this.sendMessage({ action: 'sendBulkPayload', payload: query });
       } else {
         reject('WebView2 communication not available');
       }

@@ -8,3 +8,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+table {
+  overflow: auto;
+}
+
+.limit-height {
+  max-height: calc(min(100vh, 1200px) - 40px);
+}
