@@ -1,0 +1,13 @@
+[
+  "Item Class: Wands\nRarity: Rare\nGale Thirst\nAttuned Wand\n--------\nRequirements:\nLevel: 78\nInt: 178\n--------\nItem Level: 79\n--------\n87% increased Spell Damage\n+170 to maximum Mana\n+4 to Level of all Lightning Spell Skills\n+19 to Intelligence\nGain 14 Mana per Enemy Killed",
+  
+  "Item Class: Belts\nRarity: Unique\nIngenuity\nUtility Belt\n--------\nCharm Slots: 1\n--------\nRequirements:\nLevel: 55\n--------\nItem Level: 82\n--------\n20% of Flask Recovery applied Instantly (implicit)\n--------\n80% increased bonuses gained from Equipped Rings\n--------\nExperiments with geomancy taught\nthe Maji more than they ever expected.",
+  
+  "Item Class: Stackable Currency\nRarity: Currency\nChaos Orb\n--------\nStack Size: 1/20\n--------\nRemoves a random modifier and augments a Rare item with a new random modifier\n--------\nRight click this item then left click a rare item to apply it.",
+  
+  "Item Class: Jewels\nRarity: Rare\nKraken Shine\nEmerald\n--------\nItem Level: 42\n--------\n2% increased Movement Speed\n9% increased Accuracy Rating\n10% increased Elemental Damage\nDebuffs on you expire 11% faster\n--------\nPlace into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+  
+  "Item Class: Body Armours\nRarity: Rare\nMiracle Carapace\nAdvanced Rhoahide Coat\n--------\nEvasion Rating: 485 (augmented)\n--------\nRequirements:\nLevel: 65\nDex: 105\n--------\nItem Level: 82\n--------\n79% increased Evasion Rating\n+216 to maximum Life\n+27% to Fire Resistance\n+26% to Lightning Resistance\n+27% to Chaos Resistance",
+  
+  "Item Class: Quarterstaves\nRarity: Unique\nPillar of the Caged God\nLong Quarterstaff\n--------\nQuality: +20% (augmented)\nPhysical Damage: 11-22 (augmented)\nCritical Hit Chance: 10.00%\nAttacks per Second: 1.40\n--------\nRequirements:\nDexterity: 10\n--------\nSockets: S S \n--------\nItem Level: 81\n--------\nAttacks with this Weapon Penetrate 30% Elemental Resistances (rune)\n--------\n16% increased Range (implicit)\n--------\n2% increased Area of Effect for Attacks per 5 Intelligence\n2% increased Attack Speed per 5 Dexterity\n10% increased Weapon Damage per 5 Strength\n--------\nForged to rule the waves and tide\nDestined to serve the monkey's paw\nStrong as a tower of iron\nDeft as the needle doubt\n--------\nCorrupted"
+]

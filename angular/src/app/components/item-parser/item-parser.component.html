@@ -1,0 +1,122 @@
+<div class="block" *ngIf="parsedItem && Object.keys(parsedItem).length !== 0 && (isLoaded$ | async)">
+  <div class="header">
+    <div>
+      <div *ngIf="parsedItem.rarity === 'Unique'" class="unique-text">{{ parsedItem.name }}</div>
+      <div *ngIf="parsedItem.rarity !== 'Unique'" class="click">{{ parsedItem.class | itemCategory: itemCategories }}</div>
+    </div>
+    <div class="click">
+      <span *ngIf="parsedItem.corrupted" class="red-text">Corrupted</span>
+      <span *ngIf="!parsedItem.corrupted">Not corrupted</span>
+    </div>
+  </div>
+  <div class="checkbox-list">
+    <div class="own-props">
+      <div *ngIf="parsedItem.armour" class="property" [formGroup]="getOwnGroup('armour')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="armour" formControlName="value" class="click"/>
+          <label for="armour" class="click">
+            Armour: {{ parsedItem.armour }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <div *ngIf="!parsedItem.corrupted || (parsedItem.corrupted && parsedItem.quality)" class="quality-badge">Q {{ max(parsedItem.quality || 0, 20) }}%</div>
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('armour').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('armour').get('value')?.setValue(true)">
+        </div>
+      </div>
+
+      <div *ngIf="parsedItem.evasion" class="property" [formGroup]="getOwnGroup('evasion')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="evasion" formControlName="value" class="click"/>
+          <label for="evasion" class="click">
+            Evasion Rating: {{ parsedItem.evasion }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <div *ngIf="!parsedItem.corrupted || (parsedItem.corrupted && parsedItem.quality)" class="quality-badge">Q {{ max(parsedItem.quality || 0, 20) }}%</div>
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('evasion').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('evasion').get('value')?.setValue(true)">
+        </div>
+      </div>
+
+      <div *ngIf="parsedItem.energyShield" class="property" [formGroup]="getOwnGroup('energyShield')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="energyShield" formControlName="value" class="click"/>
+          <label for="energyShield" class="click">
+            Energy Shield: {{ parsedItem.energyShield }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <div *ngIf="!parsedItem.corrupted || (parsedItem.corrupted && parsedItem.quality)" class="quality-badge">Q {{ max(parsedItem.quality || 0, 20) }}%</div>
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('energyShield').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('energyShield').get('value')?.setValue(true)">
+        </div>
+      </div>
+
+      <div *ngIf="parsedItem.pDps && parsedItem.eDps" class="property" [formGroup]="getOwnGroup('dps')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="dps" formControlName="value" class="click"/>
+          <label for="dps" class="click">
+            Total DPS: {{ parsedItem.dps }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <div *ngIf="!parsedItem.corrupted || (parsedItem.corrupted && parsedItem.quality)" class="quality-badge">Q {{ max(parsedItem.quality || 0, 20) }}%</div>
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('dps').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('dps').get('value')?.setValue(true)">
+        </div>
+      </div>
+
+      <div *ngIf="parsedItem.pDps" class="property" [formGroup]="getOwnGroup('pDps')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="pDps" formControlName="value" class="click"/>
+          <label for="pDps" class="click">
+            Physical DPS: {{ parsedItem.pDps }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <div *ngIf="!parsedItem.corrupted || (parsedItem.corrupted && parsedItem.quality)" class="quality-badge">Q {{ max(parsedItem.quality || 0, 20) }}%</div>
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('pDps').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('pDps').get('value')?.setValue(true)">
+        </div>
+      </div>
+
+      <div *ngIf="parsedItem.eDps" class="property" [formGroup]="getOwnGroup('eDps')">
+        <div class="checkbox-item click">
+          <input type="checkbox" id="eDps" formControlName="value" class="click"/>
+          <label for="eDps" class="click">
+            Elemental DPS: {{ parsedItem.eDps }}
+          </label>
+        </div>
+
+        <div class="value-block">
+          <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="getOwnGroup('eDps').get('value')?.setValue(true)">
+          <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="getOwnGroup('eDps').get('value')?.setValue(true)">
+        </div>
+      </div>
+    </div>
+
+    <div [formGroup]="mainForm">
+      <div *ngFor="let property of parsedItem.props; let i = index" class="property" formArrayName="props">
+        <div class="checkbox-item click" [formGroupName]="i">
+          <input type="checkbox" [id]="'option' + i" formControlName="value" class="click"/>
+          <label [for]="'option' + i" class="click">
+            <span *ngIf="window.debug">{{ property.key }}:</span> {{ property.originalLine }}
+          </label>
+        </div>
+
+            <div class="value-block" [formGroupName]="i">
+              <input class="value-input" type="number" formControlName="min" placeholder="Min" (focus)="propsGroups.at(i).get('value')?.setValue(true)">
+              <input class="value-input" type="number" formControlName="max" placeholder="Max" (focus)="propsGroups.at(i).get('value')?.setValue(true)">
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="generatePayload()">Search</button>
+</div>

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+	<PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+	<StartupObject>PoeOverlayApp.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.5" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1901.177" />
+  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="app.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="MainWindow.xaml">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Page>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,85 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #3f4756;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.red-text {
+  color: #ff607c;
+}
+
+.unique-text {
+  color: darkorange;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+
+  label {
+    padding-inline-start: 10px;
+  }
+
+  &:hover {
+    background-color: #3f4756;
+  }
+}
+
+.property {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0 10px;
+  border-bottom: 1px solid #3c4a5e;
+}
+
+.checkbox-item input[type='checkbox'] {
+  accent-color: #ff8c42;
+}
+
+.value-block {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.value-input {
+  font-size: 12px;
+  width: 40px;
+  background-color: #3f4756;
+  color: white;
+  border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid transparent;
+  outline: none;
+
+  &:focus {
+    border-color: #ff8c42;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+    color: white;
+  }
+}
+
+.quality-badge {
+  margin-inline-end: 4px;
+  padding: 2px 4px;
+  font-size: 10px;
+  background-color: rgba(63, 71, 86, 0.82);
+  border: 0.5px solid whitesmoke;
+  border-radius: 4px;
+}

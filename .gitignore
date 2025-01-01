@@ -1,0 +1,84 @@
+# ----------------------------
+# General .NET Ignored Files
+# ----------------------------
+
+# Build Folders
+bin/
+obj/
+
+# Visual Studio Files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Package Management
+packages/
+.nuget/
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# IDE-Specific Settings
+.idea/
+.vscode/
+
+# ----------------------------
+# Angular Ignored Files
+# ----------------------------
+
+# Node Modules
+**/node_modules/
+
+# Angular Build Output
+dist/
+out-tsc/
+
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Angular Environment Files (optional, adjust if sensitive)
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+# ----------------------------
+# wwwroot - Explicitly Include
+# ----------------------------
+
+!wwwroot/
+!wwwroot/**
+
+# ----------------------------
+# OS and Dependency Files
+# ----------------------------
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*.swp
+*~
+
+# ----------------------------
+# Miscellaneous
+# ----------------------------
+
+# Compiled Typescript
+**/*.js
+**/*.js.map
+
+# Coverage Reports
+coverage/

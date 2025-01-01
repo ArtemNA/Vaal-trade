@@ -1,0 +1,35 @@
+<div class="flex-gap">
+<!--  <button (click)="getItem()">Load Item</button>-->
+  <app-item-parser [item]="clipboardContent"></app-item-parser>
+  <div class="block table-container" *ngIf="link">
+    <div class="flex">
+      <h3>Search Result:</h3>
+
+      <button *ngIf="link" (click)="openInBrowser()">Open in browser</button>
+    </div>
+
+      <table>
+        <thead *ngIf="link && items?.length">
+        <tr>
+          <th>Time</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="link && items?.length">
+          <tr *ngFor="let item of items">
+            <td>{{ item.listing.indexed | timeFromNow }}</td>
+            <td>{{ item.listing.price.amount }} {{ item.listing.price.currency }}</td>
+            <td></td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="link && !items?.length">
+          <tr>
+            No items found.
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+</div>
